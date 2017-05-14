@@ -22,11 +22,11 @@ def query_devices(c_p):
     platforms = cl.get_platforms()
     devices = platforms[0].get_devices()
 
-    data = []
-    for pidx in range(len(platforms)):
-            devices = platforms[pidx].get_devices()
-            for didx in range(len(devices)):
-                data.append((pidx, didx))
+    data = [(0, 0)]
+    # for pidx in range(len(platforms)):
+    #         devices = platforms[pidx].get_devices()
+    #         for didx in range(len(devices)):
+    #             data.append((pidx, didx))
     c_p.send(data)
 
 ## OpenCLGAWorker is a spawned process which is supposed to run OpenCLGA on a
@@ -170,9 +170,10 @@ class OpenCLGAWorker(Process, Logger):
             elif cmd == 'best':
                 # TODO : A workaround to get best chromesome back for TSP
                 #       May need to pickle this tuple as it contains specific data structure.
-                best_chromosome, best_fitness, chromesome_kernel = self.ocl_ga.get_the_best()
-                self.__send({'type': 'best',
-                             'result': repr(best_chromosome)})
+                chromesome_kernel, best_fitness, best_chromosome = self.ocl_ga.get_the_best()
+                self.__send({ 'type' : 'best',
+                              'data' : { 'worker' : self.uuid,
+                                         'result' : best_chromosome.toJSON() }})
             elif cmd == 'statistics':
                 self.__send({'type': 'statistics',
                              'result': self.ocl_ga.get_statistics()})

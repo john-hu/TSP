@@ -275,8 +275,8 @@ class OpenCLGAServer(Logger):
                 st = dict_msg['result']
                 self.__notify('message', {'statistics' : st})
             elif dict_msg['type'] == 'best':
-                best_chromosome = eval(dict_msg['result'])
-                self.__notify('message', {'best' : best_chromosome})
+                best_chromosome = dict_msg['data']['result']
+                # self.__notify('message', {'best' : best_chromosome})
             elif dict_msg['type'] == 'save':
                 saved_filename = dict_msg['result']
             elif dict_msg['type'] == 'generationResult':
