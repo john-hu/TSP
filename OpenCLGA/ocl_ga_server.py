@@ -47,7 +47,7 @@ from .ocl_ga_wsserver import OclGAWSServer
 class OpenCLGAServer(Logger):
     def __init__(self, options, port, base_path):
         Logger.__init__(self)
-        self.logger_level = Logger.MSG_ALL ^ Logger.MSG_VERBOSE
+        self.logger_level = Logger.MSG_ALL# ^ Logger.MSG_VERBOSE
         self.__paused = False
         self.__forceStop = False
         self.__callbacks = {
