@@ -428,6 +428,11 @@ class OpenCLGA():
                                                                     self.__dev_updated_elite_fitnesses)
                 self.__elites_updated = False
 
+        self.__sample_chromosome.selection_preparation(self.__prg,
+                                                       self.__queue,
+                                                       self.__dev_fitnesses)
+
+
         # We want to prevent the best one being changed.
         if abs(self.__best_fitnesses[0] - self.__worst_fitnesses[0]) >= 0.00001:
             self.__sample_chromosome.execute_crossover(self.__prg,
@@ -455,9 +460,6 @@ class OpenCLGA():
                                             (1,),
                                             *self.__fitness_args_list).wait()
 
-        self.__sample_chromosome.selection_preparation(self.__prg,
-                                                       self.__queue,
-                                                       self.__dev_fitnesses)
         # We calculate best / worst / avg fitness in system memory for
         # better efficiency & code simplicity.
         cl.enqueue_copy(self.__queue, self.__fitnesses, self.__dev_fitnesses)
