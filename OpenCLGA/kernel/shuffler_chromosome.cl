@@ -125,6 +125,8 @@ int shuffler_chromosome_dummy_improving_func(global int* chromosome,
  */
 __kernel void shuffler_chromosome_single_gene_mutate(global int* cs,
                                                      global uint* input_rand,
+                                                     global float* fitness,
+                                                     float best_fitness,
                                                      float prob_mutate,
                                                      int improve FITNESS_ARGS)
 {
@@ -140,6 +142,9 @@ __kernel void shuffler_chromosome_single_gene_mutate(global int* cs,
   float prob_m =  rand_prob(ra);
   if (prob_m > prob_mutate) {
     // no need to mutate
+    input_rand[idx] = ra[0];
+    return;
+  } else if (fabs(fitness[idx] - best_fitness) < 0.000001) {
     input_rand[idx] = ra[0];
     return;
   }

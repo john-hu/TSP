@@ -198,10 +198,12 @@ class ShufflerChromosome:
 
 
     def execute_mutation(self, prg, queue, population, generation_idx, prob_mutate,
-                         dev_chromosomes, dev_fitnesses, dev_rnum, extra_list):
+                         dev_chromosomes, dev_fitnesses, dev_rnum, best_fitness, extra_list):
 
         args = [dev_chromosomes,
                 dev_rnum,
+                dev_fitnesses
+                numpy.float32(best_fitness)
                 numpy.float32(prob_mutate),
                 numpy.int32(self.__improving_func is not None)]
         args = args + extra_list
