@@ -202,8 +202,8 @@ class ShufflerChromosome:
 
         args = [dev_chromosomes,
                 dev_rnum,
-                dev_fitnesses
-                numpy.float32(best_fitness)
+                dev_fitnesses,
+                numpy.float32(best_fitness),
                 numpy.float32(prob_mutate),
                 numpy.int32(self.__improving_func is not None)]
         args = args + extra_list

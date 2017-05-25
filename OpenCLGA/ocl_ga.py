@@ -457,7 +457,7 @@ class OpenCLGA():
                                                   self.__dev_chromosomes,
                                                   self.__dev_fitnesses,
                                                   self.__dev_rnum,
-                                                  best_fitness
+                                                  best_fitness,
                                                   self.__extra_fitness_args_list)
 
         self.__prg.ocl_ga_calculate_fitness(self.__queue,

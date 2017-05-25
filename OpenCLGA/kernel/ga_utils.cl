@@ -185,6 +185,7 @@ void utils_calc_ratio(global float* fitness,
     ratio[i] = (temp_worst - fitness[i]) * (temp_worst - fitness[i]) /
                diffTotal;
   }
+  printf("best fitness in kernel is %f\n", best);
 }
 
 #endif
