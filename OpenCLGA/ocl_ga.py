@@ -519,6 +519,8 @@ class OpenCLGA():
             self.__best_fitnesses[idx] = tops[idx][1]
             self.__worst_indices[idx] = bottoms[idx][0]
             self.__worst_fitnesses[idx] = bottoms[idx][1]
+        cl.enqueue_copy(self.__queue, self.__dev_best_indices, self.__best_indices)
+        cl.enqueue_copy(self.__queue, self.__dev_worst_indices, self.__worst_indices)
 
     def __evolve_by_count(self, count, prob_mutate, prob_crossover):
         start_time = time.time()
@@ -748,6 +750,6 @@ class OpenCLGA():
         with self.__elite_lock:
             cl.enqueue_copy(self.__queue, self.__dev_updated_elites, self.__updated_elites)
             cl.enqueue_copy(self.__queue, self.__dev_updated_elite_fitnesses, self.__updated_elite_fitnesses)
-            cl.enqueue_copy(self.__queue, self.__dev_worst_indices, self.__worst_indices)
+            # cl.enqueue_copy(self.__queue, self.__dev_worst_indices, self.__worst_indices)
 
         self.__elites_updated = True
