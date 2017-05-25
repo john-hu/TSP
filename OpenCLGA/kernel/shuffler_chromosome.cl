@@ -251,6 +251,7 @@ __kernel void shuffler_chromosome_update_the_elites(int top,
       chromosomes[index].genes[j] = elites_chromosome[i].genes[j];
     }
     fitnesses[index] = elite_fitnesses[i];
+    printf("UPDATE index [%d]'s fitness to %f\n", index, elite_fitnesses[i]);
   }
 }
 

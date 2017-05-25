@@ -415,8 +415,12 @@ class OpenCLGA():
     def __execute_single_generation(self, index, prob_mutate, prob_crossover):
         self.__examine_single_generation(index)
 
+        best_fitness = self.__best_fitnesses[0]
+
         if self.__is_elitism_mode and self.__elites_updated:
             with self.__elite_lock:
+                best_fitness = self.__updated_elite_fitnesses[0]
+                print('update elitism {} best: {}'.format(self.__elitism_top, best_fitness))
                 # Update current N elites to device memory.
                 self.__sample_chromosome.execute_update_current_elites(self.__prg,
                                                                     self.__queue,
@@ -443,7 +447,7 @@ class OpenCLGA():
                                                        self.__dev_chromosomes,
                                                        self.__dev_fitnesses,
                                                        self.__dev_rnum,
-                                                       self.__best_fitnesses[0])
+                                                       best_fitness)
 
         self.__sample_chromosome.execute_mutation(self.__prg,
                                                   self.__queue,
