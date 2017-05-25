@@ -432,6 +432,12 @@ class OpenCLGA():
                                                                     self.__dev_updated_elite_fitnesses)
                 self.__elites_updated = False
 
+            print('recalculate all fitness value for checking the best..')
+            self.__prg.ocl_ga_calculate_fitness(self.__queue,
+                                        (self.__population,),
+                                        (1,),
+                                        *self.__fitness_args_list).wait()
+
         self.__sample_chromosome.selection_preparation(self.__prg,
                                                        self.__queue,
                                                        self.__dev_fitnesses)
