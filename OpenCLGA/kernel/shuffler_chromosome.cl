@@ -145,7 +145,7 @@ __kernel void shuffler_chromosome_single_gene_mutate(global int* cs,
     input_rand[idx] = ra[0];
     return;
   } else if (fabs(fitness[idx] - best_fitness) < 0.000001) {
-    printf("index [%d] is the best: %f\n", best_fitness);
+    printf("index [%d] is the best: %f\n", idx, best_fitness);
     input_rand[idx] = ra[0];
     return;
   }
@@ -330,7 +330,7 @@ __kernel void shuffler_chromosome_do_crossover(global int* cs,
 
   // keep the shortest path, we have to return here to prevent async barrier if someone is returned.
   if (fabs(fitness[idx] - best_fitness) < 0.000001) {
-    printf("index [%d] is the best: %f\n", best_fitness);
+    printf("index [%d] is the best: %f\n", idx, best_fitness);
     input_rand[idx] = ra[0];
     return;
   } else if (rand_prob(ra) >= prob_crossover) {
