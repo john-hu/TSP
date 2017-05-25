@@ -425,6 +425,7 @@ class OpenCLGA():
                 self.__sample_chromosome.execute_update_current_elites(self.__prg,
                                                                     self.__queue,
                                                                     self.__elitism_top,
+                                                                    index,
                                                                     self.__dev_worst_indices,
                                                                     self.__dev_chromosomes,
                                                                     self.__dev_updated_elites,

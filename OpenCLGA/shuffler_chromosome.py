@@ -164,11 +164,12 @@ class ShufflerChromosome:
                                                dev_current_elites,
                                                numpy.int32(top)).wait()
 
-    def execute_update_current_elites(self, prg, queue, top, dev_worst_indices,
+    def execute_update_current_elites(self, prg, queue, top, generation_idx, dev_worst_indices,
                                       dev_chromosomes, dev_updated_elites,
                                       dev_fitnesses, dev_updated_elite_fitness):
         prg.shuffler_chromosome_update_the_elites(queue, (1,), (1,),
                                                   numpy.int32(top),
+                                                  numpy.int32(generation_idx),
                                                   dev_worst_indices,
                                                   dev_chromosomes,
                                                   dev_updated_elites,
@@ -193,6 +194,7 @@ class ShufflerChromosome:
                                              self.__dev_other_chromosomes,
                                              self.__dev_cross_map,
                                              dev_rnum,
+                                             numpy.int32(generation_idx),
                                              numpy.float32(best_fitness),
                                              numpy.float32(prob_crossover)).wait()
 
@@ -203,6 +205,7 @@ class ShufflerChromosome:
         args = [dev_chromosomes,
                 dev_rnum,
                 dev_fitnesses,
+                numpy.int32(generation_idx),
                 numpy.float32(best_fitness),
                 numpy.float32(prob_mutate),
                 numpy.int32(self.__improving_func is not None)]

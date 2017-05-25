@@ -126,6 +126,7 @@ int shuffler_chromosome_dummy_improving_func(global int* chromosome,
 __kernel void shuffler_chromosome_single_gene_mutate(global int* cs,
                                                      global uint* input_rand,
                                                      global float* fitness,
+                                                     int generation_idx,
                                                      float best_fitness,
                                                      float prob_mutate,
                                                      int improve FITNESS_ARGS)
@@ -145,7 +146,7 @@ __kernel void shuffler_chromosome_single_gene_mutate(global int* cs,
     input_rand[idx] = ra[0];
     return;
   } else if (fabs(fitness[idx] - best_fitness) < 0.000001) {
-    printf("index [%d] is the best: %f\n", idx, best_fitness);
+    printf("%d - index [%d] is the best: %f\n", generation_idx, idx, best_fitness);
     input_rand[idx] = ra[0];
     return;
   }
@@ -235,6 +236,7 @@ __kernel void shuffler_chromosome_get_the_elites(global float* best_indices,
  * @param *elite_fitnesses (global) fitnesses of all elite chromosomes.
  */
 __kernel void shuffler_chromosome_update_the_elites(int top,
+                                                    int genIndex,
                                                     global int* worst_indices,
                                                     global int* cs,
                                                     global int* elites,
@@ -257,7 +259,7 @@ __kernel void shuffler_chromosome_update_the_elites(int top,
       chromosomes[index].genes[j] = elites_chromosome[i].genes[j];
     }
     fitnesses[index] = elite_fitnesses[i];
-    printf("UPDATE index [%d]'s fitness to %f\n", index, elite_fitnesses[i]);
+    printf("%d - UPDATE index [%d]'s fitness to %f\n", genIndex, index, elite_fitnesses[i]);
   }
 }
 
@@ -317,6 +319,7 @@ __kernel void shuffler_chromosome_do_crossover(global int* cs,
                                                global int* p_other,
                                                global int* c_map,
                                                global uint* input_rand,
+                                               int genIndex,
                                                float best_fitness,
                                                float prob_crossover)
 {
@@ -330,7 +333,7 @@ __kernel void shuffler_chromosome_do_crossover(global int* cs,
 
   // keep the shortest path, we have to return here to prevent async barrier if someone is returned.
   if (fabs(fitness[idx] - best_fitness) < 0.000001) {
-    printf("index [%d] is the best: %f\n", idx, best_fitness);
+    printf("%d - index [%d] is the best: %f\n", genIndex, idx, best_fitness);
     input_rand[idx] = ra[0];
     return;
   } else if (rand_prob(ra) >= prob_crossover) {
