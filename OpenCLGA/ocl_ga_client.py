@@ -22,11 +22,11 @@ def query_devices(c_p):
     platforms = cl.get_platforms()
     devices = platforms[0].get_devices()
 
-    data = [(0, 0)]
-    # for pidx in range(len(platforms)):
-    #         devices = platforms[pidx].get_devices()
-    #         for didx in range(len(devices)):
-    #             data.append((pidx, didx))
+    data = []
+    for pidx in range(len(platforms)):
+         devices = platforms[pidx].get_devices()
+         for didx in range(len(devices)):
+             data.append((pidx, didx))
     c_p.send(data)
 
 ## OpenCLGAWorker is a spawned process which is supposed to run OpenCLGA on a
