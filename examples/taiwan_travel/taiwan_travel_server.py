@@ -55,7 +55,7 @@ def get_taiwan_travel_info():
 
     # It seems we don't need to use this helper if we enlarge the population size. Please
     # re-evaluate and remove or uncomment the following line:
-    # sample.use_improving_only_mutation('improving_only_mutation_helper')
+    sample.use_improving_only_mutation('improving_only_mutation_helper')
     dict_info = { 'sample_chromosome': sample,
                   'termination': { 'type': 'count',
                                    'count': 100 },
